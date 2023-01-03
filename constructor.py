@@ -5,10 +5,28 @@ import json
 import uuid
 import time
 from players import personajes
+from enum import Enum
 
 data = {}
 data['personajes_creados'] = []
 
+
+ 
+class Raza(Enum):
+    Humanos = 1
+    Orcos = 2
+
+class ClaseHumano(Enum):
+    Guerrero = 1
+    Jinete = 1
+    Mago = 1
+ 
+ # self.crearPersonaje(raza_seleccionada, clase_seleccionada)
+
+class ClaseOrco(Enum):
+    Guerrero = 1
+    Chamán = 1
+    Jinete = 1
 
 class Personaje():
     def __init__(self, nombre, raza, clase, vida, mana):
@@ -23,37 +41,25 @@ class Personaje():
 2) Orcos""")
         raza_seleccionada = input("\n> ")
         if raza_seleccionada == '1':
-            raza_seleccionada = "Humanos"
+            raza_seleccionada = Raza(raza_seleccionada).name
             print("""\n¿Qué clase de humano deseas crear?\n
 1) Guerrero
 2) Jinete
 3) Mago """)
             clase_seleccionada = input("\n>")
-            if clase_seleccionada == '1':
-                clase_seleccionada = 'Guerrero'
-                self.crearPersonaje(raza_seleccionada, clase_seleccionada)
-            elif clase_seleccionada == '2':
-                clase_seleccionada = 'Jinete'
-                self.crearPersonaje(raza_seleccionada, clase_seleccionada)
-            elif clase_seleccionada == '3':
-                clase_seleccionada = 'Mago'
-                self.crearPersonaje(raza_seleccionada, clase_seleccionada)
+
+            self.crearPersonaje(raza_seleccionada, ClaseHumano(clase_seleccionada).name)
+               
         elif raza_seleccionada == '2':
-            raza_seleccionada = "Orcos"
+            raza_seleccionada = Raza(raza_seleccionada).name
             print("""\n¿Qué clase de orco deseas crear?\n
 1) Guerrero
 2) Chamán
 3) Jinete """)
             clase_seleccionada = input("\n> ")
-            if clase_seleccionada == '1':
-                clase_seleccionada = 'Guerrero'
-                self.crearPersonaje(raza_seleccionada, clase_seleccionada)
-            elif clase_seleccionada == '2':
-                clase_seleccionada = 'Chamán'
-                self.crearPersonaje(raza_seleccionada, clase_seleccionada)
-            elif clase_seleccionada == '3':
-                clase_seleccionada = 'Jinete'
-                self.crearPersonaje(raza_seleccionada, clase_seleccionada)
+           
+            self.crearPersonaje(raza_seleccionada, ClaseOrco(clase_seleccionada).name)
+
         else:
             print("\nHas introducido un comando inválido")
 
