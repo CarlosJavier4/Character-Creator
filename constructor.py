@@ -1,32 +1,31 @@
-# Carlos Javier Blanco
 # Python3 + JSON
 
 import json
 import uuid
 import time
 from players import personajes
-from enum import Enum
 
 data = {}
 data['personajes_creados'] = []
 
+class Raza():
+	valores = {'1': 'Humanos','2': 'Orcos'}
 
- 
-class Raza(Enum):
-    Humanos = 1
-    Orcos = 2
-
-class ClaseHumano(Enum):
-    Guerrero = 1
-    Jinete = 1
-    Mago = 1
+class ClaseHumano():
+    tipoHumano = {
+    	'1': 'Guerrero',
+    	'2': 'Jinete',
+    	'3': 'Mago'
+    }
  
  # self.crearPersonaje(raza_seleccionada, clase_seleccionada)
 
-class ClaseOrco(Enum):
-    Guerrero = 1
-    Chamán = 1
-    Jinete = 1
+class ClaseOrco():
+    tipoOrco = {
+    	'1': 'Guerrero',
+    	'2': 'Chamán',
+    	'3': 'Jinete'
+    }
 
 class Personaje():
     def __init__(self, nombre, raza, clase, vida, mana):
@@ -39,26 +38,26 @@ class Personaje():
         print("""\n ¿Qué personaje deseas crear?\n
 1) Humanos
 2) Orcos""")
-        raza_seleccionada = input("\n> ")
+        raza_seleccionada = input('\n> ')
         if raza_seleccionada == '1':
-            raza_seleccionada = Raza(raza_seleccionada).name
+            raza_seleccionada = Raza().valores[raza_seleccionada] # Identificar la raza
             print("""\n¿Qué clase de humano deseas crear?\n
 1) Guerrero
 2) Jinete
 3) Mago """)
             clase_seleccionada = input("\n>")
 
-            self.crearPersonaje(raza_seleccionada, ClaseHumano(clase_seleccionada).name)
+            self.crearPersonaje(raza_seleccionada, ClaseHumano().tipoHumano[clase_seleccionada]) #Crear luego de dentificar el jugador humano
                
         elif raza_seleccionada == '2':
-            raza_seleccionada = Raza(raza_seleccionada).name
+            raza_seleccionada = Raza().valores[raza_seleccionada]
             print("""\n¿Qué clase de orco deseas crear?\n
 1) Guerrero
 2) Chamán
 3) Jinete """)
             clase_seleccionada = input("\n> ")
            
-            self.crearPersonaje(raza_seleccionada, ClaseOrco(clase_seleccionada).name)
+            self.crearPersonaje(raza_seleccionada, ClaseOrco().tipoOrco[clase_seleccionada]) # Crear luego de identificar el jugador orco
 
         else:
             print("\nHas introducido un comando inválido")
@@ -83,9 +82,9 @@ class Personaje():
 
     def guardarPersonaje(self, datos):
         data['personajes_creados'].append(datos)
-        pjs = data['personajes_creados']
+        #pjs = data['personajes_creados']
         archivo = open('Personajes.json', 'w')
-        json.dump(pjs, archivo, indent=4)
+        json.dump(data, archivo, indent=4)
 
 class Iniciar(Personaje):
     def __init__(self):
